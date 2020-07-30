@@ -1,0 +1,22 @@
+{
+  "contacts": [
+    {
+      "name": "test",
+      "phone": "test",
+      "owner": "user",
+      "id": 1
+    },
+    {
+      "name": "test1",
+      "phone": "test",
+      "owner": "user",
+      "id": 2
+    }
+  ],
+  "users": [
+    {
+      "name": "user",
+      "password": "user"
+    }
+  ]
+}
