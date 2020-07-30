@@ -1,12 +1,19 @@
+import './logout-button.css';
 import React from 'react';
+import { Button } from 'antd';
 import { userLogoutHandle } from '../../actions';
 import { connect } from 'react-redux';
 
 const LogoutButton = ({ onLogout }) => {
   return (
-    <button className='btn btn-secondary text-light' onClick={() => onLogout()}>
+    <Button
+      size='large'
+      ghost
+      onClick={onLogout}
+      style={{ margin: ' auto 0 auto auto' }}
+    >
       Logout
-    </button>
+    </Button>
   );
 };
 

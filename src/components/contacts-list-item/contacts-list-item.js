@@ -9,7 +9,8 @@ import {
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withContactsService } from '../hoc-helpers';
-import Form from '../form';
+import InputForm from '../form';
+import { Button, Typography } from 'antd';
 
 const ContactsListItem = (props) => {
   const {
@@ -22,12 +23,7 @@ const ContactsListItem = (props) => {
   } = props;
   const { id, name, phone } = data;
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    const newName = e.target.elements['username'].value;
-    const newPhone = e.target.elements['phone'].value;
-    Array.from(e.target.elements).forEach((el) => (el.value = ''));
-
+  const onSubmit = ({ name: newName, phone: newPhone }) => {
     if (
       newName.length > 0 &&
       newPhone.length > 0 &&
@@ -42,8 +38,8 @@ const ContactsListItem = (props) => {
   if (isEditing) {
     if (id === isEditing.id) {
       return (
-        <Form
-          onSubmit={(e) => onSubmit(e)}
+        <InputForm
+          onSubmit={onSubmit}
           buttonName={'Edit'}
           nameValue={name}
           phoneValue={phone}
@@ -53,29 +49,33 @@ const ContactsListItem = (props) => {
   }
 
   return (
-    <div className='d-flex justify-content-between'>
-      <span className='item-info'>
-        {name} <span className='text-primary'>{phone}</span>
-      </span>
-      <div>
-        <button
-          type='button'
-          className='btn btn-outline-danger mx-1'
-          onClick={() => onDelete(data)}
-        >
+    <>
+      <Typography.Text style={{ fontSize: '18px' }}>{name}</Typography.Text>
+      <Typography.Text
+        strong
+        style={{
+          marginLeft: 'auto',
+          fontSize: '18px',
+          marginRight: '7px',
+          color: '#1890ff',
+        }}
+      >
+        {phone}
+      </Typography.Text>
+
+      <Button.Group>
+        <Button type='danger' onClick={() => onDelete(data)}>
           <i className='fa fa-trash-o'></i>
-        </button>
-        <button
-          type='button'
-          className='btn btn-outline-warning mx-1'
+        </Button>
+        <Button
           onClick={() => {
             onEdit({ name, id, phone });
           }}
         >
           <i className='fa fa-edit'></i>
-        </button>
-      </div>
-    </div>
+        </Button>
+      </Button.Group>
+    </>
   );
 };
 

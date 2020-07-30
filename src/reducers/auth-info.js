@@ -2,23 +2,20 @@ const updateAuthInfo = (state, action) => {
   if (!state) {
     return {
       username: '',
-      password: '',
       isFetching: false,
       isSucceded: undefined,
       isFailed: false,
     };
   }
   switch (action.type) {
-    case 'USER_INPUT_HANDLE':
-      const { key, value } = action.payload;
+    case 'SAVE_USERNAME':
       return {
         ...state.authInfo,
-        [key]: value,
+        username: action.payload,
       };
     case 'USER_LOGOUT_HANDLE':
       return {
         username: '',
-        password: '',
         isFetching: false,
         isSucceded: undefined,
         isFailed: false,

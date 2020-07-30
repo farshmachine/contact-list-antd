@@ -1,58 +1,69 @@
 import React from 'react';
+import { Form, Input, Button } from 'antd';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { userInputHandle, fetchUserAuth } from '../../actions';
+import { fetchUserAuth } from '../../actions';
 import { withAuthService } from '../hoc-helpers';
 import { Redirect } from 'react-router-dom';
 import Spinner from '../spinner';
 import { ServerErrorIndicator, AuthErrorIndicator } from '../error-indicators';
+import './login-form.css';
 
 const LoginForm = (props) => {
-  const { serverError, loginError, userInputHandle, fetchUserAuth } = props;
+  const { serverError, loginError, fetchUserAuth } = props;
+
+  const onFinish = (values) => {
+    fetchUserAuth(values);
+  };
 
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        fetchUserAuth();
+    <Form
+      name='normal_login'
+      className='login-form'
+      initialValues={{
+        remember: true,
       }}
+      onFinish={onFinish}
     >
-      <div className='form-group'>
-        <label htmlFor='username'>Username</label>
-        <input
-          type='text'
-          className='form-control'
-          id='username'
-          autoComplete='off'
-          onInput={(e) =>
-            userInputHandle({
-              key: e.target.id,
-              value: e.target.value,
-            })
-          }
+      <Form.Item
+        name='username'
+        rules={[
+          {
+            required: true,
+            message: 'Please input your Username!',
+          },
+        ]}
+      >
+        <Input
+          prefix={<UserOutlined className='site-form-item-icon' />}
+          placeholder='Username'
         />
-      </div>
-      <div className='form-group'>
-        <label htmlFor='password'>Password</label>
-        <input
+      </Form.Item>
+      <Form.Item
+        name='password'
+        rules={[
+          {
+            required: true,
+            message: 'Please input your Password!',
+          },
+        ]}
+      >
+        <Input
+          prefix={<LockOutlined className='site-form-item-icon' />}
           type='password'
-          className='form-control'
-          id='password'
-          autoComplete='off'
-          onInput={(e) =>
-            userInputHandle({
-              key: e.target.id,
-              value: e.target.value,
-            })
-          }
+          placeholder='Password'
         />
-        {serverError}
-        {loginError}
-      </div>
-      <button type='submit' className='btn btn-primary d-block mx-auto'>
-        Login
-      </button>
-    </form>
+      </Form.Item>
+
+      <Form.Item>
+        <Button type='primary' htmlType='submit' className='login-form-button'>
+          Log in
+        </Button>
+      </Form.Item>
+      {serverError}
+      {loginError}
+    </Form>
   );
 };
 
@@ -62,18 +73,18 @@ const LoginFormContainer = (props) => {
   let loginError = null;
   const serverError = hasError ? <ServerErrorIndicator /> : null;
 
-  if (loading) {
-    return <Spinner />;
-  }
-
   if (isLoggedIn) {
     return <Redirect to='/contacts' />;
-  } else if (isLoggedIn === false) {
+  }
+
+  if (isLoggedIn === false) {
     loginError = <AuthErrorIndicator />;
   }
 
   return (
-    <LoginForm {...props} serverError={serverError} loginError={loginError} />
+    <Spinner isLoading={loading}>
+      <LoginForm {...props} serverError={serverError} loginError={loginError} />
+    </Spinner>
   );
 };
 
@@ -90,8 +101,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, { authService }) => {
   return {
-    userInputHandle: (data) => dispatch(userInputHandle(data)),
-    fetchUserAuth: () => dispatch(fetchUserAuth(authService)),
+    fetchUserAuth: (creds) => dispatch(fetchUserAuth(creds, authService)),
   };
 };
 

@@ -1,18 +1,10 @@
 import React from 'react';
+import { Spin } from 'antd';
 import './spinner.css';
 
-const Spinner = () => {
-  return (
-    <div className='loadingio-spinner-reload-qu9agwhj56g mx-auto my-4 d-block'>
-      <div className='ldio-ookgf17dgkg'>
-        <div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-      </div>
-    </div>
-  );
+const Spinner = (props) => {
+  const { children, isLoading } = props;
+  return <Spin spinning={isLoading}>{children}</Spin>;
 };
 
 export default Spinner;

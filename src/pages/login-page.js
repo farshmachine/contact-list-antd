@@ -2,6 +2,9 @@ import React, { useEffect } from 'react';
 import LoginForm from '../components/login-form';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { Typography, Row, Col } from 'antd';
+
+const { Title } = Typography;
 
 const LoginPage = ({ isLoggedIn }) => {
   useEffect(() => {
@@ -11,12 +14,19 @@ const LoginPage = ({ isLoggedIn }) => {
   }, [isLoggedIn]);
 
   return (
-    <div className='jumbotron'>
-      <h1 className='text-center'>Login</h1>
-      <div className='col-xs-10 col-sm-6 col-md-6 col-lg-3 mx-auto'>
-        <LoginForm />
-      </div>
-    </div>
+    <Row style={{ margin: '16px 0' }}>
+      <Col
+        xs={{ span: 22, offset: 1 }}
+        md={{ span: 12, offset: 6 }}
+        lg={{ span: 8, offset: 8 }}
+        xl={{ span: 6, offset: 9 }}
+      >
+        <Title style={{ textAlign: 'center' }}>Login page</Title>
+        <div className=''>
+          <LoginForm />
+        </div>
+      </Col>
+    </Row>
   );
 };
 

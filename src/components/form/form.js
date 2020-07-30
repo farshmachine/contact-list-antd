@@ -1,45 +1,47 @@
 import './form.css';
-
+import { Form, Input, Button } from 'antd';
 import React from 'react';
 
-const Form = (props) => {
+const InputForm = (props) => {
+  const [form] = Form.useForm();
   const {
     status = null,
     buttonName,
     onSubmit,
-    nameValue = null,
-    phoneValue = null,
+    nameValue = '',
+    phoneValue = '',
   } = props;
 
   return (
     <>
-      <form
-        className='form-group d-flex'
-        onSubmit={(e) => {
-          onSubmit(e);
+      <Form
+        form={form}
+        layout='inline'
+        onFinish={(values) => {
+          onSubmit(values);
+          form.resetFields();
         }}
+        initialValues={{ name: nameValue, phone: phoneValue }}
       >
-        <input
-          type='text'
-          className='form-control mr-1'
-          id='username'
-          placeholder='Contact name'
-          autoComplete='off'
-          defaultValue={nameValue}
-        />
-        <input
-          type='tel'
-          className='form-control mr-1'
-          id='phone'
-          placeholder='Contact number'
-          autoComplete='off'
-          defaultValue={phoneValue}
-        />
-        <button className='btn btn-success'>{buttonName}</button>
-      </form>
-      {status}
+        <Form.Item name='name'>
+          <Input placeholder='name' autoComplete='off' />
+        </Form.Item>
+        <Form.Item name='phone'>
+          <Input
+            placeholder='phone'
+            autoComplete='off'
+            pattern='^(\+7|8)\s?\(?\d{3}\)?\s?-?\d{3}\s?-?\d{2}\s?-?\d{2}'
+          />
+        </Form.Item>
+        <Form.Item>
+          <Button type='primary' htmlType='submit'>
+            {buttonName}
+          </Button>
+        </Form.Item>
+        {status}
+      </Form>
     </>
   );
 };
 
-export default Form;
+export default InputForm;

@@ -7,86 +7,57 @@ import { compose } from 'redux';
 import ContactsListItem from '../contacts-list-item';
 import Spinner from '../spinner';
 import ContactAddForm from '../contact-add-form';
+import { Typography, Input, List } from 'antd';
 
-const ContactsList = ({
-  data,
-  fetchContacts,
-  contactIsFetching,
-  filterContacts,
-}) => {
-  const { isFetching, isFailed, items, filter } = data;
-  let overlay = null;
+const { Title } = Typography;
+
+const ContactsList = (props) => {
+  const { data, fetchContacts, contactIsFetching, filterContacts } = props;
+  const { isFetching, items, filter } = data;
 
   useEffect(() => {
     fetchContacts();
   }, []);
 
-  if (isFetching) {
-    return (
-      <>
-        <p className='h3 text-center mt-3'>Loading enrties...</p>
-        <Spinner />
-      </>
-    );
-  }
+  const title =
+    items.length === 0 ? (
+      <Title level={3} style={{ textAlign: 'center' }}>
+        Create your first entry
+      </Title>
+    ) : null;
 
-  if (isFailed) {
-    return <p>Error</p>;
-  }
+  const filterInput = (
+    <Input
+      placeholder='Filter'
+      onInput={(e) => {
+        filterContacts(e.target.value.toString());
+      }}
+    />
+  );
 
-  if (items.length === 0) {
-    return (
-      <>
-        <p className='h5 text-center mt-3'>Create your first entry!</p>
-        <ContactAddForm />
-      </>
-    );
-  }
-
-  if (contactIsFetching) {
-    overlay = (
-      <div className='overlay'>
-        Working...
-        <Spinner />
-      </div>
-    );
-  }
+  const addForm = <ContactAddForm />;
 
   return (
-    <div className='contacts-list-container'>
-      {overlay}
-      <input
-        placeholder='Search'
-        className='form-control'
-        type='text'
-        pattern='[a-zA-Zа-яА-ЯёЁ0-9]*'
-        onInput={(e) => {
-          filterContacts(e.target.value);
-        }}
-      />
-      <ul className='list-group'>
-        {items.map((item) => {
-          if (filter) {
-            if (item.name.toLowerCase().match(filter.toLowerCase())) {
-              return (
-                <li key={item.id} className='list-group-item my-1'>
-                  <ContactsListItem data={item} />
-                </li>
-              );
-            }
-          } else {
+    <Spinner isLoading={isFetching || contactIsFetching}>
+      <List
+        style={{ backgroundColor: 'white' }}
+        header={title || filterInput}
+        footer={addForm}
+        bordered
+        dataSource={items}
+        renderItem={(item) => {
+          if (
+            item.name.toLowerCase().match(new RegExp(`${filter.toLowerCase()}`))
+          ) {
             return (
-              <li key={item.id} className='list-group-item my-1'>
+              <List.Item>
                 <ContactsListItem data={item} />
-              </li>
+              </List.Item>
             );
           }
-
-          return;
-        })}
-      </ul>
-      <ContactAddForm />
-    </div>
+        }}
+      />
+    </Spinner>
   );
 };
 
