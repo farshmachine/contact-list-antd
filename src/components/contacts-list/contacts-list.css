@@ -1,20 +1,21 @@
-.contacts-list-container {
-  position: relative;
+.ant-list .ant-form {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
 }
 
-.overlay {
-  position: absolute;
-  top: 0;
-  color: #fff;
-  font-weight: 600;
-  font-size: 25px;
+.ant-list .ant-form .ant-input {
+}
+
+.ant-list .ant-form .ant-form-item {
+  flex: 2;
+}
+.ant-list .ant-form .ant-form-item:last-of-type {
+  flex: 1;
+  margin-right: 0;
+}
+
+.ant-form button {
   width: 100%;
-  height: 100%;
-  background-color: rgba(167, 178, 187, 0.9);
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border-radius: 8px;
 }

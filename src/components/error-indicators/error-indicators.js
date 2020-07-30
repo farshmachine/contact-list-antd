@@ -1,49 +1,38 @@
 import React from 'react';
+import { Alert } from 'antd';
 
 const ServerErrorIndicator = () => {
   return (
-    <div className='alert alert-warning my-3' role='alert'>
-      <strong>Man down!</strong> Please retry in a few seconds
-    </div>
+    <Alert
+      showIcon
+      message='Man down! Please retry in a few seconds'
+      type='warning'
+      closable
+    />
   );
 };
 
 const AuthErrorIndicator = () => {
   return (
-    <div
-      className='alert alert-warning alert-dismissible fade show my-3'
-      role='alert'
-    >
-      <strong>Holy guacamole!</strong> You should check in on some of those
-      fields above.
-      <button
-        type='button'
-        className='close'
-        data-dismiss='alert'
-        aria-label='Close'
-      >
-        <span aria-hidden='true'>&times;</span>
-      </button>
-    </div>
+    <Alert
+      showIcon
+      message='Holy guacamole! You should check in on some of those
+    fields above.'
+      type='warning'
+      closable
+    />
   );
 };
 
 const ContactListErrorIndicator = () => {
   return (
-    <div
-      className='alert alert-warning alert-dismissible fade show'
-      role='alert'
-    >
-      Ooops, something went wrong
-      <button
-        type='button'
-        className='close'
-        data-dismiss='alert'
-        aria-label='Close'
-      >
-        <span aria-hidden='true'>&times;</span>
-      </button>
-    </div>
+    <Alert
+      showIcon
+      message='Oops, something went wrong'
+      type='warning'
+      closable
+      description=''
+    />
   );
 };
 

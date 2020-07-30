@@ -1,15 +1,14 @@
-const userInputHandle = (data) => ({
-  type: 'USER_INPUT_HANDLE',
-  payload: data,
+const saveUsername = (username) => ({
+  type: 'SAVE_USERNAME',
+  payload: username,
 });
 
 const fetchUserAuthRequest = () => ({
   type: 'FETCH_USER_AUTH_REQUEST',
 });
 
-const fetchUserAuthSuccess = (data) => ({
+const fetchUserAuthSuccess = () => ({
   type: 'FETCH_USER_AUTH_SUCCESS',
-  payload: data,
 });
 
 const fetchUserAuthFailed = () => ({
@@ -20,11 +19,10 @@ const fetchUserAuthInvalid = () => ({
   type: 'FETCH_USER_AUTH_INVALID',
 });
 
-const fetchUserAuth = (authService) => {
-  return (dispatch, getState) => {
-    const {
-      authInfo: { username, password },
-    } = getState();
+const fetchUserAuth = (creds, authService) => {
+  return (dispatch) => {
+    const { username, password } = creds;
+    dispatch(saveUsername(username));
     dispatch(fetchUserAuthRequest());
     authService
       .userAuthRequest(username, password)
@@ -181,7 +179,7 @@ const editContact = ({ old, newOne }) => ({
 });
 
 export {
-  userInputHandle,
+  saveUsername,
   fetchUserAuth,
   userLogoutHandle,
   fetchContacts,
