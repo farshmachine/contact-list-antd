@@ -1,6 +1,6 @@
 # Contact List App
 
-Built with React + Redux
+Built with React + Redux + AntD
 
 ## How to deploy
 
