@@ -10,4 +10,4 @@ Built with React + Redux + AntD
 
 ## Username and password
 
-You can find availible users in db.json file. However you can add new entry by yourself
+You can find availible users credentials in db.json file. However you can add new one by yourself!

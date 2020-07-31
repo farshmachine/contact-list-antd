@@ -10,7 +10,7 @@ const { Header, Content, Footer } = Layout;
 const App = () => {
   return (
     <>
-      <Layout>
+      <Layout style={{ height: '100vh' }}>
         <Header>
           <SiteHeader />
         </Header>
