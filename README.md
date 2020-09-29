@@ -10,6 +10,6 @@ Simple app built with React + Redux + AntD
 
 ## Username and password
 
-Note that user authentication in this app is mocked with simple json-server and has nothing with real world auth concepts. Seriously, don't do like that :)
+Note that user authentication in this app is mocked with simple json-server and has nothing in common with real world auth concepts. Seriously, don't do like that :)
 
 You can find availible users credentials in db.json file. However you can add new one by yourself
